@@ -14,6 +14,7 @@ RUN apt-get update && \
 #RUN perl -pi -e 's/^OPTIONS/#OPTIONS/' /etc/default/rpcbind
 #RUN echo "portmap: 192.168.1." >> /etc/hosts.allow
 #RUN /etc/init.d/rpcbind restart
+#error when restart
 
 
 #USER $NB_UID
