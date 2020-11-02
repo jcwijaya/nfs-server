@@ -15,11 +15,7 @@ RUN apt-get update && \
 
 RUN mkdir /home/jovyan/example
 RUN mkdir /mnt/example
-RUN sudo echo "/mnt/example 172.17.0.2(rw,no_root_squash,subtree_check)" >> /etc/export
-RUN sudo service rpcbind start
-RUN sudo service nfs-kernel-server start
-RUN sudo service nfs-common start
-RUN sudo exportfs -a
-RUN sudo mount -t nfs -o v3,proto=tcp,port=2049 172.17.0.2:/mnt/example /home/jovyan/example
+RUN sudo echo "/mnt/example 172.17.0.2(rw,no_root_squash,subtree_check)" >> /etc/exports
+COPY start.sh /usr/local/bin/before-notebook.d/start.sh
 
 USER root
