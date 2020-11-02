@@ -7,14 +7,19 @@ USER root
 RUN apt-get update && \
     apt-get install -y \
     dnsutils \
+    rpcbind \
     nfs-kernel-server \
-    portmap \
+    nfs-common \
+    kmod \
     && apt-get clean
 
-#RUN perl -pi -e 's/^OPTIONS/#OPTIONS/' /etc/default/rpcbind
-#RUN echo "portmap: 192.168.1." >> /etc/hosts.allow
-#RUN /etc/init.d/rpcbind restart
-#error when restart
+RUN mkdir /home/jovyan/example
+RUN mkdir /mnt/example
+RUN sudo echo "/mnt/example 172.17.0.2(rw,no_root_squash,subtree_check)" >> /etc/export
+RUN sudo service rpcbind start
+RUN sudo service nfs-kernel-server start
+RUN sudo service nfs-common start
+RUN sudo exportfs -a
+RUN sudo mount -t nfs -o v3,proto=tcp,port=2049 172.17.0.2:/mnt/example /home/jovyan/example
 
-
-#USER $NB_UID
+USER root
