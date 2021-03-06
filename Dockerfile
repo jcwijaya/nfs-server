@@ -21,6 +21,7 @@ RUN mkdir /home/volumes
 RUN mkdir /mnt/volumes
 RUN echo "/mnt/volumes *(rw,no_root_squash,subtree_check)" >> /etc/exports
 COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 USER root
 
